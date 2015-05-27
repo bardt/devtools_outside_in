@@ -163,6 +163,48 @@
 				}
 		</style>
 	</div></section>
+	<section class="slide"><div>
+		<div id="buttonClickDemoContainer">
+			<div>
+				<button>Нажми меня</button>
+			</div>
+			<div class="pictureContainer"></div>
+		</div>
+		<style>
+			#buttonClickDemoContainer button {
+				margin: 0 auto 2em auto;
+				display: block;
+				font-size: 160%;
+			}
+			#buttonClickDemoContainer .pictureContainer {
+				margin: 2em auto;
+				width: 100%;
+			    height: 330px;
+			    outline: gray 1px solid;
+			    text-align: center;
+			    overflow: hidden;
+			}
+		</style>
+		<script>
+			(function() {
+				function addImage() {
+					var img = document.createElement('img');
+					img.src = 'pictures/logo.svg';
+					picContainer.appendChild(img);
+				}
+
+				var containerId = '#buttonClickDemoContainer';
+				var button = document.querySelector(containerId + ' button');
+				var picContainer = document.querySelector(containerId + ' .pictureContainer');
+
+				button.addEventListener('click', function() {
+					picContainer.innerHTML = null;
+					// XHR or timeout
+					setTimeout(addImage, 1000);
+				});
+			})();
+		</script>
+	</div></section>
 	<p class="badge"><a href="https://github.com/shower/shower">Fork me on Github</a></p>
 	<!--
 		To hide progress bar from entire presentation
