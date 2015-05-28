@@ -164,19 +164,19 @@
 		</style>
 	</div></section>
 	<section class="slide"><div>
-		<div id="buttonClickDemoContainer">
+		<div id="buttonClickDemo">
 			<div>
 				<button>Нажми меня</button>
 			</div>
 			<div class="pictureContainer"></div>
 		</div>
 		<style>
-			#buttonClickDemoContainer button {
+			#buttonClickDemo button {
 				margin: 0 auto 2em auto;
 				display: block;
 				font-size: 160%;
 			}
-			#buttonClickDemoContainer .pictureContainer {
+			#buttonClickDemo .pictureContainer {
 				margin: 2em auto;
 				width: 100%;
 			    height: 330px;
@@ -193,7 +193,7 @@
 					picContainer.appendChild(img);
 				}
 
-				var containerId = '#buttonClickDemoContainer';
+				var containerId = '#buttonClickDemo';
 				var button = document.querySelector(containerId + ' button');
 				var picContainer = document.querySelector(containerId + ' .pictureContainer');
 
@@ -204,6 +204,78 @@
 				});
 			})();
 		</script>
+	</div></section>
+	<section class="slide"><div>
+		<div id="collisionsDemo">
+			<button>Проверить пересечения</button>
+			<style>
+				#collisionsDemo {
+					width: 784px;
+					height: 535px;
+					outline: gray 1px solid;
+				    overflow: hidden;
+				    position: relative;
+				}
+
+				#collisionsDemo .circle {
+					position: absolute;
+
+					background: grey;
+					border-radius: 50%;
+
+				}
+			</style>
+			<script>
+				(function() {
+					var containerId = 'collisionsDemo';
+					var container = document.getElementById(containerId);
+					var button = document.querySelector('#' + containerId + ' button');
+
+					var circles = [
+						{
+							radius: 40,
+							x: 140,
+							y: 210
+						},
+						{
+							radius: 50,
+							x: 500,
+							y: 180
+						}
+					];
+
+					function drawCircles() {
+						circles.forEach(function(circle, index) {
+							var element = document.createElement('i');
+							element.classList.add('circle');
+
+							element.innerText = index;
+
+							element.style.top = circle.y + 'px';
+							element.style.left = circle.x + 'px';
+							element.style.width = element.style.height = 2 * circle.radius + 'px';
+							element.style.backgroundColor = circle.color;
+
+							container.appendChild(element);
+							circle.element = element;
+						});
+					}
+
+					function checkCollisions() {
+						for (var i=0; i < circles.length; i++) {
+							var first = circles[i];
+							for (var j=i+1; i < circles.length; i++) {
+								var second = circles[j];
+							}
+						}
+					}
+
+					drawCircles();
+
+					button.addEventListener('click', checkCollisions);
+				})();
+			</script>
+		</div>
 	</div></section>
 	<p class="badge"><a href="https://github.com/shower/shower">Fork me on Github</a></p>
 	<!--
