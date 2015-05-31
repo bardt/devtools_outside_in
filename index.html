@@ -9,17 +9,16 @@
 </head>
 <body class="list">
 	<header class="caption">
-		<h1>Shower Presentation Engine</h1>
-		<p>Yours Truly, Famous Inc.</p>
+		<h1>Chrome Developer Tools</h1>
+		<p>для вскрытия черных ящиков</p>
 	</header>
 	<section class="slide" id="Cover"><div>
         <h2>Chrome Developer Tools</h2>
-        <h3>как инструмент исследования</h3>
+        <h3>для вскрытия черных ящиков</h3>
         <div class="about">
             <div>Роман Сальников</div>
             <div><img src="pictures/logo_black.svg" alt=""></div>
         </div>
-
         <style>
             .gisLogo {
                 background: url(pictures/logo_black.svg) no-repeat center;
@@ -55,10 +54,8 @@
     		<li>Кода много</li>
     		<li>Людей много</li>
     		<li>Уследить невозможно</li>
+    		<li class="next">Нужно постоянно изучать</li>
     	</ul>
-    </div></section>
-    <section class="slide"><div>
-
     </div></section>
     <section class="slide"><div>
 		<h2>Уровни понимания</h2>
@@ -148,12 +145,11 @@
 		<h2>Если на пальцах</h2>
     </div></section>
     <section class="slide"><div>
-    	<h2>Про коллстэки</h2>
+    	<h2>Трассы исполнения</h2>
     	<ul>
     		<li>Умные брэйкпоинты</li>
     		<li>Async полезно, но не всегда</li>
     		<li>Blackbox для сторонних библиотек</li>
-    		<li>Watch переменных</li>
     	</ul>
     </div></section>
     <section class="slide shout"><div>
@@ -162,10 +158,10 @@
     <section class="slide"><div>
     	<h2>Timeline</h2>
     	<ul>
-    		<li>Развитие приложения во времени</li>
-    		<li>Коллстэки</li>
-    		<li>Переход к коду</li>
-    		<li>Пользовательские метки</li>
+    		<li>Изначально - запись событий браузера</li>
+    		<li>Потом стал профайлером</li>
+    		<li>Потом научился отдавать стэки (переход к коду)</li>
+    		<li>Можно использовать для обзора архитектуры</li>
     	</ul>
     </div></section>
 	<section class="slide"><div>
@@ -245,12 +241,19 @@
 			</script>
 		</div>
 	</div></section>
-	<section></section>
+	<section class="slide"><div>
+		<h2>Timeline</h2>
+		<ul>
+			<li>Именуйте функции</li>
+			<li>Ставьте метки</li>
+			<li>Анализируйте по-маленьку</li>
+		</ul>
+	</div></section>
 	<section class="slide shout"><div>
 		<h2>Бизнес-логика</h2>
 	</div></section>
 	<section class="slide"><div>
-		<h2>console</h2>
+		<h2>console на ключевых моментах</h2>
 		<ul>
 			<li><code>.log()</code></li>
 			<li><code>.group()</code></li>
@@ -263,27 +266,76 @@
 		<pre>
 			<code>var watchMe = {};</code>
 			<code>Object.observe(watchMe, function(options) {</code>
-			<code>    options.forEach(function(option) {</code>
-			<code>        var groupName = option.name + ' changed';</code>
-			<code>        console.groupCollapsed(groupName);</code>
-			<code>        console.log('Old value: ', option.oldValue);</code>
-			<code>        console.log('New value: ', option.object[option.name]);</code>
-			<code>        console.groupEnd(groupName);</code>
-			<code>    });</code>
+			<code>  options.forEach(function(option) {</code>
+			<code>    var groupName = option.name + ' changed';</code>
+			<code>    console.groupCollapsed(groupName);</code>
+			<code>    console.log('Old value: ', option.oldValue);</code>
+			<code>    console.log('New value: ', option.object[option.name]);</code>
+			<code>    console.groupEnd(groupName);</code>
+			<code>  });</code>
 			<code>});</code>
 		</pre>
+	</div></section>
+	<section class="slide"><div>
+		<h2>Собственные инструменты</h2>
+		<img src="pictures/ember.png" alt="">
 	</div></section>
 	<section class="slide"><div>
 		<h2>DevTools Extensions API</h2>
 		<ul>
 			<li>Панель, специфичная для приложения</li>
 			<li>Интеграция со стандартными инструментами</li>
-			<li>Не самая очевидная дока</li>
+			<li>Теоритически, можно все, но...</li>
+			<li class="next">Не самая очевидная дока</li>
+			<li class="next">Не самая удобная отладка</li>
 		</ul>
 	</div></section>
 	<section class="slide"><div>
-		<img src="pictures/ember.webp" alt="">
+		<h2>Итого</h2>
+		<ul>
+			<li>Уровень кода: умные брэйкпоинты и async callstack</li>
+			<li>Уровень архитектуры и рантайма: timeline</li>
+			<li>Уровень бизнес-логики: логи и крафтовые инструменты</li>
+		</ul>
 	</div></section>
+	<section class="slide" id="BackCover"><div>
+        <h2>Chrome Developer Tools</h2>
+        <h3>для вскрытия черных ящиков</h3>
+        <div class="about">
+            <div>Роман Сальников</div>
+            <div>r.salnikov@2gis.ru</div>
+            <div>@bardty</div>
+            <div><img src="pictures/logo_black.svg" alt=""></div>
+        </div>
+        <style>
+            .gisLogo {
+                background: url(pictures/logo_black.svg) no-repeat center;
+                width:100px;
+                height:42px;
+                position:absolute;
+                left: 120px;
+                bottom: 60px;
+            }
+            #BackCover h2 {
+                text-align: center;
+            }
+            #BackCover h3 {
+                text-align: center;
+                font-style: italic;
+            }
+            #BackCover:after {
+				display: none;
+            }
+
+            .about {
+            	padding-top: 120px;
+        	    text-align: center;
+            }
+            .about > div {
+            	padding: .4em 0;
+            }
+        </style>
+    </div></section>
 
 	<p class="badge"><a href="https://github.com/shower/shower">Fork me on Github</a></p>
 	<!--
