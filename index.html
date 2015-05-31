@@ -15,10 +15,11 @@
 	<section class="slide" id="Cover"><div>
         <h2>Chrome Developer Tools</h2>
         <h3>как инструмент исследования</h3>
-        <p class="about">
+        <div class="about">
             <div>Роман Сальников</div>
-        </p>
-        <div class="gisLogo"></div>
+            <div><img src="pictures/logo_black.svg" alt=""></div>
+        </div>
+
         <style>
             .gisLogo {
                 background: url(pictures/logo_black.svg) no-repeat center;
@@ -35,6 +36,17 @@
                 text-align: center;
                 font-style: italic;
             }
+            #Cover:after {
+				display: none;
+            }
+
+            .about {
+            	padding-top: 200px;
+        	    text-align: center;
+            }
+            .about > div {
+            	padding: .4em 0;
+            }
         </style>
     </div></section>
     <section class="slide"><div>
@@ -42,14 +54,34 @@
     	<ul>
     		<li>Кода много</li>
     		<li>Людей много</li>
-    		<li>Уследить не возможно</li>
+    		<li>Уследить невозможно</li>
     	</ul>
     </div></section>
     <section class="slide"><div>
 
     </div></section>
+    <section class="slide"><div>
+		<h2>Уровни понимания</h2>
+		<ul>
+			<li>Трассы исполнения</li>
+			<li>Сценарии использования</li>
+			<li>Бизнес-логика</li>
+		</ul>
+    </div></section>
+    <section class="slide shout"><div>
+    	<h2>Трассы исполнения</h2>
+    </div></section>
     <section class="slide"><div style="background: url(pictures/blackbox.png)">
 		<h2>Если на пальцах</h2>
+    </div></section>
+    <section class="slide"><div>
+		<h2>Поймать результат</h2>
+		<ul>
+			<li>Pause on exceptions</li>
+			<li><code>debugger;</code></li>
+			<li>XHR breakpoint</li>
+			<li>DOM breakpoint</li>
+		</ul>
     </div></section>
     <section class="slide"><div>
 		<div id="buttonClickDemo">
@@ -68,7 +100,7 @@
 				margin: 2em auto;
 				width: 100%;
 			    height: 330px;
-			    outline: gray 1px solid;
+			    /*outline: gray 1px solid;*/
 			    text-align: center;
 			    overflow: hidden;
 			}
@@ -77,7 +109,7 @@
 			(function() {
 				function addImage() {
 					var img = document.createElement('img');
-					img.src = 'pictures/logo.svg';
+					img.src = 'pictures/logo_black.svg';
 					picContainer.appendChild(img);
 				}
 
@@ -102,32 +134,66 @@
     <section class="slide"><div style="background: url(pictures/callstack.png)">
 		<h2>Если на пальцах</h2>
     </div></section>
+    <section class="slide"><div>
+		<h2>Поймать событие</h2>
+		<ul>
+			<li>Event listeners</li>
+			<li>$0 + getEventListeners() + debug()</li>
+		</ul>
+    </div></section>
     <section class="slide"><div style="background: url(pictures/stepdebugger.png)">
 		<h2>Если на пальцах</h2>
     </div></section>
     <section class="slide"><div style="background: url(pictures/async.png)">
 		<h2>Если на пальцах</h2>
     </div></section>
-
+    <section class="slide"><div>
+    	<h2>Про коллстэки</h2>
+    	<ul>
+    		<li>Умные брэйкпоинты</li>
+    		<li>Async полезно, но не всегда</li>
+    		<li>Blackbox для сторонних библиотек</li>
+    		<li>Watch переменных</li>
+    	</ul>
+    </div></section>
+    <section class="slide shout"><div>
+    	<h2>Сценарии использования</h2>
+    </div></section>
+    <section class="slide"><div>
+    	<h2>Timeline</h2>
+    	<ul>
+    		<li>Развитие приложения во времени</li>
+    		<li>Коллстэки</li>
+    		<li>Переход к коду</li>
+    		<li>Пользовательские метки</li>
+    	</ul>
+    </div></section>
 	<section class="slide"><div>
 		<div id="timelineDemo">
-			<button id="timelineDemoButton">Выполнить тяжелую работу</button>
+			<button id="timelineDemoButton">Высчитать корни третьей степени</button>
 			<table>
 			</table>
+			<style>
+				#timelineDemoButton {
+					margin: 0 auto 2em auto;
+					display: block;
+					font-size: 160%;
+				}
+			</style>
 			<script>
 				(function() {
-
 					function App() {
 						this.roots = [];
-
 						this.calculateRoots(100000);
 					}
 
 					App.prototype.calculateRoots = function calculateRoots(n) {
+						var root;
 						for (var i = this.roots.length; i < n; i++) {
+							root = this.getRoot(i);
 							this.roots.push({
 								index: i,
-								root: this.getRoot(i)
+								root: root
 							});
 						}
 					};
@@ -155,10 +221,10 @@
 					function init() {
 						app = new App();
 						setTimeout(function calculateEverything() {
-							app.calculateRoots(1000000);
+							app.calculateRoots(2000000);
 
-							setTimeout(renderTable, 0);
-						}, 0);
+							setTimeout(renderTable, 10);
+						}, 10);
 					}
 
 					function renderTable() {
@@ -168,6 +234,9 @@
 
 					var button = document.getElementById('timelineDemoButton');
 					button.addEventListener('click', function() {
+						var table = document.querySelector('#timelineDemo table');
+						table.innerHTML = '';
+
 						console.timeStamp('init started');
 					    init();
 					    console.timeStamp('init finished');
@@ -176,78 +245,46 @@
 			</script>
 		</div>
 	</div></section>
-	<section class="slide"><div>
-		<div id="collisionsDemo">
-			<button>Проверить пересечения</button>
-			<style>
-				#collisionsDemo {
-					width: 784px;
-					height: 535px;
-					outline: gray 1px solid;
-				    overflow: hidden;
-				    position: relative;
-				}
-
-				#collisionsDemo .circle {
-					position: absolute;
-
-					background: grey;
-					border-radius: 50%;
-
-				}
-			</style>
-			<script>
-				(function() {
-					var containerId = 'collisionsDemo';
-					var container = document.getElementById(containerId);
-					var button = document.querySelector('#' + containerId + ' button');
-
-					var circles = [
-						{
-							radius: 40,
-							x: 140,
-							y: 210
-						},
-						{
-							radius: 50,
-							x: 500,
-							y: 180
-						}
-					];
-
-					function drawCircles() {
-						circles.forEach(function(circle, index) {
-							var element = document.createElement('i');
-							element.classList.add('circle');
-
-							element.innerText = index;
-
-							element.style.top = circle.y + 'px';
-							element.style.left = circle.x + 'px';
-							element.style.width = element.style.height = 2 * circle.radius + 'px';
-							element.style.backgroundColor = circle.color;
-
-							container.appendChild(element);
-							circle.element = element;
-						});
-					}
-
-					function checkCollisions() {
-						for (var i=0; i < circles.length; i++) {
-							var first = circles[i];
-							for (var j=i+1; i < circles.length; i++) {
-								var second = circles[j];
-							}
-						}
-					}
-
-					drawCircles();
-
-					button.addEventListener('click', checkCollisions);
-				})();
-			</script>
-		</div>
+	<section></section>
+	<section class="slide shout"><div>
+		<h2>Бизнес-логика</h2>
 	</div></section>
+	<section class="slide"><div>
+		<h2>console</h2>
+		<ul>
+			<li><code>.log()</code></li>
+			<li><code>.group()</code></li>
+			<li><code>.info()</code></li>
+			<li><code>.warn()</code></li>
+			<li><code>.timeStamp()</code></li>
+		</ul>
+	</div></section>
+	<section class="slide"><div>
+		<pre>
+			<code>var watchMe = {};</code>
+			<code>Object.observe(watchMe, function(options) {</code>
+			<code>    options.forEach(function(option) {</code>
+			<code>        var groupName = option.name + ' changed';</code>
+			<code>        console.groupCollapsed(groupName);</code>
+			<code>        console.log('Old value: ', option.oldValue);</code>
+			<code>        console.log('New value: ', option.object[option.name]);</code>
+			<code>        console.groupEnd(groupName);</code>
+			<code>    });</code>
+			<code>});</code>
+		</pre>
+	</div></section>
+	<section class="slide"><div>
+		<h2>DevTools Extensions API</h2>
+		<ul>
+			<li>Панель, специфичная для приложения</li>
+			<li>Интеграция со стандартными инструментами</li>
+			<li>Не самая очевидная дока</li>
+		</ul>
+	</div></section>
+	<section class="slide"><div>
+		<img src="pictures/ember.webp" alt="">
+	</div></section>
+
 	<p class="badge"><a href="https://github.com/shower/shower">Fork me on Github</a></p>
 	<!--
 		To hide progress bar from entire presentation
